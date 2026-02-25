@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "orders-api"
+version = "0.1.0"
+description = "api of orders to study python"
+authors = ["Allan Rodrigo <allanrdg6@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic = "^2.12.5"
+fastapi = "^0.133.0"
+uvicorn = "^0.41.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
