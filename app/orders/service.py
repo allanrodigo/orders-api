@@ -36,7 +36,7 @@ def get_all_orders() -> list[Order]:
 
 def get_order_by_code(code: str):
     if code not in ORDERS:
-        raise HTTPException(status_code=404, detail="code not found")
+        raise HTTPException(status_code=404, detail=f"code {code} not found")
     return ORDERS[code]
 
 def update_order_status(code: str, new_status: OrderStatuses):

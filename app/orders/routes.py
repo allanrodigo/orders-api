@@ -4,7 +4,7 @@ from app.orders.service import create_order, get_all_orders, get_order_by_code, 
 
 app = FastAPI()
 
-@app.post("/orders")
+@app.post("/orders", status_code=201)
 async def create(order_request: OrderRequest):
     return create_order(order_request=order_request)
 
