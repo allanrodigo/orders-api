@@ -1,10 +1,10 @@
 # Orders API
 
-API de gerenciamento de pedidos construída com **FastAPI** e Python. Permite criar pedidos, listar todos, consultar por código e atualizar o status seguindo regras de transição válidas.
+Order management API built with **FastAPI** and Python 3.12. Allows creating orders, listing all orders, retrieving by order code, and updating order status following valid transition rules.
 
 ---
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 .
@@ -25,22 +25,22 @@ API de gerenciamento de pedidos construída com **FastAPI** e Python. Permite cr
 
 ---
 
-## Instalação
+## Installation
 
-**1. Clone o repositório**
+**1. Clone the repository**
 
 ```bash
 git clone https://github.com/allanrodigo/orders-api.git
 cd orders-api
 ```
 
-**2. Instale as dependências com Poetry**
+**2. Install dependencies with Poetry**
 
 ```bash
 poetry install
 ```
 
-**3. Ative o ambiente virtual**
+**3. Activate the virtual environment**
 
 ```bash
 poetry env activate
@@ -48,7 +48,7 @@ poetry env activate
 
 ---
 
-## Executando a API
+## Running the API
 
 Via Makefile:
 
@@ -56,19 +56,19 @@ Via Makefile:
 make run
 ```
 
-Ou diretamente com Uvicorn:
+Or directly with Uvicorn:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-A API estará disponível em: `http://127.0.0.1:8000`
+The API will be available at: `http://127.0.0.1:8000`
 
 ---
 
 ## Endpoints
 
-### POST `/orders/` — Criar Pedido
+### POST `/orders/` — Create Order
 
 **Request Body**
 
@@ -93,7 +93,7 @@ A API estará disponível em: `http://127.0.0.1:8000`
 
 ---
 
-### GET `/orders/` — Listar Todos os Pedidos
+### GET `/orders/` — List All Orders
 
 **Response** `200 OK`
 
@@ -111,7 +111,7 @@ A API estará disponível em: `http://127.0.0.1:8000`
 
 ---
 
-### GET `/orders/{code}` — Consultar Pedido por Código
+### GET `/orders/{code}` — Retrieve Order by Code
 
 **Response** `200 OK`
 
@@ -129,13 +129,13 @@ A API estará disponível em: `http://127.0.0.1:8000`
 
 ```json
 {
-  "detail": "code 'ORD9999999' not found"
+  "detail": "Order with code 'ORD9999999' not found"
 }
 ```
 
 ---
 
-### PATCH `/orders/{code}` — Atualizar Status do Pedido
+### PATCH `/orders/{code}` — Update Order Status
 
 **Request Body**
 
@@ -157,19 +157,19 @@ A API estará disponível em: `http://127.0.0.1:8000`
 }
 ```
 
-**Erros possíveis**
+**Possible errors**
 
-| Código HTTP | Motivo                                        |
-|-------------|-----------------------------------------------|
-| `409`       | Transição inválida (ex: `created -> delivered`) |
-| `422`       | Status desconhecido (ex: `shippedd`)          |
-| `404`       | Pedido não encontrado (ex: `ORD9999999`)      |
+| HTTP Code | Reason                                              |
+|-----------|-----------------------------------------------------|
+| `409`     | Invalid transition (e.g. `created -> delivered`)    |
+| `422`     | Unknown status (e.g. `shippedd`)                    |
+| `404`     | Order not found (e.g. `ORD9999999`)                 |
 
 ---
 
-## Regras de Transição de Status
+## Status Transition Rules
 
-| Status Atual      | Transições Permitidas             |
+| Current Status    | Allowed Transitions               |
 |-------------------|-----------------------------------|
 | `created`         | `processing`, `cancelled`         |
 | `processing`      | `ready_to_ship`, `cancelled`      |
@@ -180,20 +180,20 @@ A API estará disponível em: `http://127.0.0.1:8000`
 
 ---
 
-## Dependências
+## Dependencies
 
-| Pacote    | Descrição                        |
+| Package   | Description                      |
 |-----------|----------------------------------|
 | Python    | 3.12                             |
-| FastAPI   | Framework web assíncrono         |
-| Uvicorn   | Servidor ASGI                    |
-| Poetry    | Gerenciamento de dependências    |
+| FastAPI   | Async web framework              |
+| Uvicorn   | ASGI server                      |
+| Poetry    | Dependency management            |
 
 ---
 
-## Observações
+## Notes
 
-- O código do pedido é gerado sequencialmente: `ORD0000000`, `ORD0000001`, ...
-- O cálculo da comissão é realizado pela função `calculate_comission` em `app/orders/domain/utils.py`.
-- Todas as transições de status são validadas por `state_machine.py`.
-- Os retornos da API são serializáveis via Pydantic ou `dict`.
+- Order codes are generated sequentially: `ORD0000000`, `ORD0000001`, ...
+- Commission calculation is handled by the `calculate_comission` function in `app/orders/domain/utils.py`.
+- All status transitions are validated by `state_machine.py`.
+- API responses are serializable via Pydantic or `dict`.
